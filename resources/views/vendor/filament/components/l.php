@@ -1,0 +1,1 @@
+{{-- <img src="{{ asset('/images/briteck.png') }}" alt="Logo" class="h-10"> --}}
