@@ -2,30 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use App\Models\Projects_user;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 use App\Filament\Resources\ProjectsUserResource\Pages;
-use App\Filament\Resources\ProjectsUserResource\RelationManagers;
-use App\Filament\Resources\ProjectsUserResource\Pages\EditProjectsUser;
-use App\Filament\Resources\ProjectsUserResource\Pages\ListProjectsUsers;
-use App\Filament\Resources\ProjectsUserResource\Pages\CreateProjectsUser;
 
 class ProjectsUserResource extends Resource
 {
-    protected static ?string $title = "projectser";
-
-    protected static ?string $model = Projects_user::class;
+    protected static ?string $model = projects_user::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {

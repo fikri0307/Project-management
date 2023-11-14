@@ -2,26 +2,25 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Models\Ticket_statuses;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ColorColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TicketStatusesResource\Pages;
-use App\Filament\Resources\TicketStatusesResource\RelationManagers;
-use Filament\Tables\Actions\DeleteBulkAction;
+
 
 class TicketStatusesResource extends Resource
 {
     protected static ?string $model = Ticket_statuses::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+
+    protected static ?string $navigationLabel = 'Todo Status';
+
+    protected static ?int $navigationSort = 6;
 
     public static function form(Form $form): Form
     {
