@@ -8,72 +8,77 @@ use App\Models\Project;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use Filament\Forms\FormsComponent;
-use Illuminate\Support\HtmlString;
-use Filament\Forms\Components\Card;
-use function Laravel\Prompts\select;
-use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
-
-
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Textarea;
 use App\Filament\Resources\ProjectResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\ProjectResource\RelationManagers;
-use Illuminate\Database\Eloquent\Factories\Relationship;
+use App\Models\Project_statuses;
+use App\Models\projects_user;
+use App\Models\User;
+use Filament\Tables\Columns\TagsColumn;
+use Filament\Tables\Filters\SelectFilter;
 
 class ProjectResource extends Resource
 {
-    protected static ?string $model = Project::class;
+    protected static ?string $model = project::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
 
-//  protected static ?string $navigationLabel = 'apalah';
-    // protected static ?string $modelLabel = '';
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                // protected $fillable = ['id','name','guard_name','created_at','updated_at'];
-                // TextColumn::make('name')->sortable()->searchable()->label('nama'),
-                // TextColumn::make('guard_name')->sortable()->searchable(),
-                // TextColumn::make('created_at')->sortable()->searchable()->label('Status'),
-              
-       
-                    TextInput::make('name')->required()->autofocus(),
-                    TextInput::make('owner_id'),
-                    TextInput::make('description'),
-                    Select::make('project_statuses_id')
-                        ->options([
-                            '1' => 'in progress',
-                            '2' => 'done'
-                        ])->required(),
-
-                    // Select::make('Status')
-                    //     ->options([
-                    //         'Aktif' => 'Aktif',
-                    //         'Tidak aktif' => 'Tidak aktif'
-
-                    //     ]),  
-  
-                ])
-                 ->columns(1);
+                        TextInput::make('name')->label('Project Name')->required()->autofocus(),
+                        Select::make('owner_id')
+                            ->label('Project Manager')
+                            ->options( fn() => User::role(['project-management', 'admin'])->get()->pluck('name', 'id')->toArray())
+                            ->required()
+                            ->disablePlaceholderSelection()
+                        ,
+                        Textarea::make('description'),
+                        // Select::make('projects_user')
+                        //     ->label('Assign')
+                        //     ->multiple()
+                        //     ->options(fn() => User::whereHas('roles', function($query) {
+                        //             $query->where('name', 'teams');
+                        //         })
+                        //     ->pluck('name', 'id')->toArray())
+                        //     ->required()                            
+                        // ,
+                        Select::make('users_id')
+                            ->label('Assign')
+                            ->multiple()
+                            ->options(fn(Get $get): Collection => projects_user::query() 
+                                ->where('')
+                            )
+                            ->required()                            
+                        ,
+                        Select::make('project_statuses_id')
+                            ->label('Status')
+                            ->options( fn() => Project_statuses::all()->pluck('name', 'id')->toArray() )
+                            ->default( fn() => Project_statuses::where('is_default', true)->first()?->id )
+                            ->required()
+                            ->disablePlaceholderSelection()
+                        ,
+                    ])
+                    ->columns(1);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
+        return $table 
             ->columns([
-                TextColumn::make('name')->sortable()->searchable()->label('nama'),
-                TextColumn::make('description')->sortable()->searchable(),
-                TextColumn::make('status.name')->sortable()->searchable()->label('Status'),
-                TextColumn::make('owner.name')->sortable()->searchable()->label('owner'),
-                TextColumn::make('created_at')->dateTime('Y-m-d')->sortable(),
+                TextColumn::make('name')->sortable()->searchable()->label('Name'),
+                // TextColumn::make('description')->sortable()->searchable(),
+                TextColumn::make('projectStatus.name')->sortable()->searchable()->label('Status'),
+                TextColumn::make('owner.name')->sortable()->searchable()->label('PM'),
+                TagsColumn::make('users.name')->label('Assign')->limit(3)
             ])
             ->filters([
-                //
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -100,4 +105,5 @@ class ProjectResource extends Resource
             'edit' => Pages\EditProject::route('/{record}/edit'),
         ];
     }    
+
 }

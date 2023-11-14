@@ -7,10 +7,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\Contracts\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Permission\Traits\HasRoles;
 
 class Users extends Model
 {
-    use HasFactory,Notifiable;
+    use HasFactory, Notifiable, HasRoles;
     /**
      * The attributes that are mass assignable.
      *
@@ -41,6 +42,29 @@ class Users extends Model
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // public function projectsUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    // {
+    //     return $this->hasMany(\App\Models\Project_user::class, 'users_id');
+    // }
+    // public function projectsUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    // {
+    //     return $this->hasMany(\App\Models\project::class, 'projects_user' ,'users_id', 'projects_id');
+    // }
+    public function projectsUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\projects_user::class, 'users_id');
+    }
+
+    public function tickets(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        // return $this->belongsToMany(\App\Models\Ticket::class, 'users_has_tickets');
+        return $this->belongsToMany(\App\Models\Todo::class, 'users_has_tickets', 'tickets_id', 'users_id');
+    }
+    public function projects()
+    {
+        return $this->belongsToMany(\App\Models\Project::class, 'users_id', 'projects_id');
+    }
    
 }
 

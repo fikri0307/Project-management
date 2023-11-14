@@ -20,6 +20,10 @@ class TicketsResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
+    protected static ?string $navigationLabel = 'Todo';
+
+    protected static ?int $navigationSort = 5;
+
     public static function form(Form $form): Form
     {
         return $form

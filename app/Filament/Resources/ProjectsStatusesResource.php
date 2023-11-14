@@ -2,34 +2,27 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use Filament\Tables;
-use Faker\Core\Color;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Models\Project_statuses;
 use Filament\Resources\Resource;
-use Illuminate\Support\HtmlString;
 use Filament\Forms\Components\Select;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ColorColumn;
-use Filament\Tables\Actions\DeleteAction;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ProjectsStatusesResource\Pages;
-use App\Filament\Resources\ProjectsStatusesResource\RelationManagers;
-use App\Filament\Resources\ProjectsStatusesResource\Pages\EditProjectsStatuses;
-use App\Filament\Resources\ProjectsStatusesResource\Pages\ListProjectsStatuses;
-use App\Filament\Resources\ProjectsStatusesResource\Pages\CreateProjectsStatuses;
+
 
 class ProjectsStatusesResource extends Resource
 {
     protected static ?string $model = Project_statuses::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+
+    protected static ?string $navigationLabel = 'Project Status';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
