@@ -3,34 +3,66 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class project extends Model
 {
-    use HasFactory;
-    protected $fillable = ['id','name','description','Status_id','owner_id','project_statuses_id','updated_at','created _at','name'];
+    use HasFactory, SoftDeletes;
+    
+    public $table = 'projects';
 
-// public function show($id)
-// {
-//     $projectManager = User::role('project-management')->get();
-//     $project = $this->projectRepository->find($id);
+    protected $fillable = [
+    'name',
+    'description',
+    'owner_id',
+    'project_statuses_id'
+    ];
 
+    protected $casts = [
+        'name' => 'string',
+        'description' => 'string',
+        'projectUsers' => 'array'
+    ];
 
-//     return view('projects.show', compact('projectManager', 'status'))->with('project', $project);
-// }
-public function project_status(): BelongsTo
+    public static array $rules = [
+        'name' => 'nullable|string|max:255',
+        'description' => 'nullable|string',
+        'owner_id' => 'nullable',
+        'deleted_at' => 'nullable',
+        'created_at' => 'nullable',
+        'updated_at' => 'nullable',
+        'project_statuses_id' => 'required',
+        'projectUsers' => 'required'
+    ];
+
+    public function projectStatus(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(project_statuses::class,"project_statuses_id");
+        return $this->belongsTo(\App\Models\Project_statuses::class, 'project_statuses_id');
     }
 
-public function owner(): BelongsTo{
+    // public function projectsUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    // {
+    //     return $this->hasMany(\App\Models\projects_user::class, 'projects_id', 'users_id');
+    // }
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(\App\Models\Users::class, 'projects_user' ,'projects_id', 'users_id');
+    }
 
-    return $this->belongsTo(users::class,"owner_id");
-}
+    public function projectsUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\project::class, 'projects_user', 'projects_id', 'users_id');
+    }
 
-public function status(): BelongsTo{
+    public function tickets(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\tickets::class, 'projects_id', 'id');
+    }
+    public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Users::class, 'owner_id', 'id');
+    }
 
-    return $this->belongsTo(Project_statuses::class,"project_statuses_id");
-}
+    
 }

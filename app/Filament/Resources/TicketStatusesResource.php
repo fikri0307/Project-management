@@ -2,32 +2,41 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Models\Ticket_statuses;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ColorColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TicketStatusesResource\Pages;
-use App\Filament\Resources\TicketStatusesResource\RelationManagers;
-use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\ColorPicker;
+use Filament\Tables\Columns\IconColumn;
 
 class TicketStatusesResource extends Resource
 {
-    protected static ?string $model = Ticket_statuses::class;
+    protected static ?string $model = ticket_statuses::class;
+
+    protected static ?string $modelLabel = 'Todo Status';
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+
+    protected static ?string $navigationLabel = 'Todo Status';
+
+    protected static ?int $navigationSort = 6;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')->label('Name Status')
+                ,
+                ColorPicker::make('color')->label('Color')
+                ,
+                Checkbox::make('is_default')->label('Is Default')
+
             ]);
     }
 
@@ -35,23 +44,17 @@ class TicketStatusesResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->sortable()->searchable(),
                 TextColumn::make('name')->sortable()->searchable()->label('user'),
                 ColorColumn::make('color')->sortable()->searchable(),
-                TextColumn::make('is_default')->sortable()->searchable()
-                ->enum([
-                    '1' => 'true',
-                    '2'=> '1',
-                ]), 
-                TextColumn::make('updated_at')->dateTime('Y-m-d')->sortable()->searchable(),
-                TextColumn::make('created_at')->dateTime('Y-m-d')->sortable(),
-                TextColumn::make('is_default')->sortable()->searchable(),    
+                IconColumn::make('is_default')->sortable()->boolean()->searchable()->label('Is Default'),     
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -69,8 +72,8 @@ class TicketStatusesResource extends Resource
     {
         return [
             'index' => Pages\ListTicketStatuses::route('/'),
-            'create' => Pages\CreateTicketStatuses::route('/create'),
-            'edit' => Pages\EditTicketStatuses::route('/{record}/edit'),
+            // 'create' => Pages\CreateTicketStatuses::route('/create'),
+            // 'edit' => Pages\EditTicketStatuses::route('/{record}/edit'),
         ];
     }    
 }
