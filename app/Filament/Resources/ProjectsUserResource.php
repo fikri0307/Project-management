@@ -2,30 +2,42 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use App\Models\Projects_user;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+<<<<<<< HEAD
 use App\Filament\Resources\ProjectsUserResource\Pages;
-use App\Filament\Resources\ProjectsUserResource\RelationManagers;
-use App\Filament\Resources\ProjectsUserResource\Pages\EditProjectsUser;
-use App\Filament\Resources\ProjectsUserResource\Pages\ListProjectsUsers;
-use App\Filament\Resources\ProjectsUserResource\Pages\CreateProjectsUser;
+use Filament\Tables\Columns\BadgeColumn;
+=======
+<<<<<<< HEAD
+use App\Filament\Resources\ProjectsUserResource\Pages;
+use Filament\Tables\Columns\BadgeColumn;
+=======
+
+use App\Filament\Resources\ProjectsUserResource\Pages;
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
+>>>>>>> bbe94287769f5741e2c66cbc687538c945cca4e8
 
 class ProjectsUserResource extends Resource
 {
-    protected static ?string $title = "projectser";
+    protected static ?string $model = projects_user::class;
+<<<<<<< HEAD
 
-    protected static ?string $model = Projects_user::class;
+    protected static ?string $modelLabel = 'Project User';
+=======
+<<<<<<< HEAD
+
+    protected static ?string $modelLabel = 'Project User';
+=======
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
+>>>>>>> bbe94287769f5741e2c66cbc687538c945cca4e8
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
@@ -37,20 +49,17 @@ class ProjectsUserResource extends Resource
 
     public static function table(Table $table): Table
     {
+        
         return $table
             ->columns([
-                TextColumn::make('id')->sortable()->searchable(),
-                TextColumn::make('owner.name')->sortable()->searchable()->label('user'),
+                BadgeColumn::make('users.name')->sortable()->searchable()->label('Team')->colors(['warning']),
                 TextColumn::make('projects.name')->sortable()->searchable(),
-                TextColumn::make('updated_at')->dateTime('Y-m-d')->sortable()->searchable(),
-                TextColumn::make('created_at')->dateTime('Y-m-d')->sortable(),
-                TextColumn::make('deleted_at')->dateTime('Y-m-d')->sortable()->searchable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -69,8 +78,8 @@ class ProjectsUserResource extends Resource
     {
         return [
             'index' => Pages\ListProjectsUsers::route('/'),
-            'create' => Pages\CreateProjectsUser::route('/create'),
-            'edit' => Pages\EditProjectsUser::route('/{record}/edit'),
+            // 'create' => Pages\CreateProjectsUser::route('/create'),
+            // 'edit' => Pages\EditProjectsUser::route('/{record}/edit'),
         ];
     }    
 }
