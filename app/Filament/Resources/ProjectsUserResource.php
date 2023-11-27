@@ -8,14 +8,22 @@ use App\Models\Projects_user;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
+<<<<<<< HEAD
 use App\Filament\Resources\ProjectsUserResource\Pages;
 use Filament\Tables\Columns\BadgeColumn;
+=======
+
+use App\Filament\Resources\ProjectsUserResource\Pages;
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
 
 class ProjectsUserResource extends Resource
 {
     protected static ?string $model = projects_user::class;
+<<<<<<< HEAD
 
     protected static ?string $modelLabel = 'Project User';
+=======
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 

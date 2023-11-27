@@ -26,7 +26,11 @@ class projects_user extends Model
 
     public function projects(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
+<<<<<<< HEAD
         return $this->belongsTo(\App\Models\project::class, 'projects_id');
+=======
+        return $this->belongsTo(\App\Models\Project::class, 'projects_id');
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
     }
 
     // public function users(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -36,6 +40,7 @@ class projects_user extends Model
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(\App\Models\Users::class, 'users_id');
+<<<<<<< HEAD
     }
 
     public function team(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -46,6 +51,8 @@ class projects_user extends Model
     public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(\App\Models\User::class, 'owner_id', 'id');
+=======
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
     }
 
 }

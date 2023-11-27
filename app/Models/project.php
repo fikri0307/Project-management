@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class project extends Model
 {
+<<<<<<< HEAD
     use HasFactory, SoftDeletes;
+=======
+    use HasFactory;
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
     
     public $table = 'projects';
 
@@ -16,13 +20,22 @@ class project extends Model
     'name',
     'description',
     'owner_id',
+<<<<<<< HEAD
     'project_statuses_id'
+=======
+    'project_statuses_id',
+    'projects_user'
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
     ];
 
     protected $casts = [
         'name' => 'string',
         'description' => 'string',
+<<<<<<< HEAD
         'projectUsers' => 'array'
+=======
+        'projects_user' => 'array'
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
     ];
 
     public static array $rules = [
@@ -32,8 +45,12 @@ class project extends Model
         'deleted_at' => 'nullable',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
+<<<<<<< HEAD
         'project_statuses_id' => 'required',
         'projectUsers' => 'required'
+=======
+        'project_statuses_id' => 'required'
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
     ];
 
     public function projectStatus(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -45,6 +62,7 @@ class project extends Model
     // {
     //     return $this->hasMany(\App\Models\projects_user::class, 'projects_id', 'users_id');
     // }
+<<<<<<< HEAD
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(\App\Models\Users::class, 'projects_user' ,'projects_id', 'users_id');
@@ -64,5 +82,30 @@ class project extends Model
         return $this->belongsTo(\App\Models\Users::class, 'owner_id', 'id');
     }
 
+=======
+    // public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    // {
+    //     return $this->belongsToMany(\App\Models\Users::class, 'projects_user' ,'projects_id', 'users_id');
+    // }
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Users::class, 'users_id' ,'projects_id');
+    }
+    public function projectusers(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\projects_user::class, 'users_id' ,'projects_id');
+    }
+
+    public function tickets(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        // return $this->hasMany(\App\Models\Ticket::class, 'projects_id');
+        return $this->hasMany(\App\Models\Todo::class, 'projects_id');
+    }
+    public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\User::class, 'owner_id', 'id');
+    }
+
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
     
 }
