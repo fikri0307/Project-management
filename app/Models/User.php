@@ -50,7 +50,15 @@ class User extends Authenticatable
     // }
     public function projectsUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
+<<<<<<< HEAD
         return $this->hasMany(\App\Models\project::class, 'projects_user', 'users_id', 'projects_id' );
+=======
+<<<<<<< HEAD
+        return $this->hasMany(\App\Models\project::class, 'projects_user', 'users_id', 'projects_id' );
+=======
+        return $this->hasMany(\App\Models\project::class, 'projects_user' ,'users_id', 'projects_id');
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
+>>>>>>> bbe94287769f5741e2c66cbc687538c945cca4e8
     }
 
     public function tickets(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -60,6 +68,14 @@ class User extends Authenticatable
     }
     public function projects()
     {
+<<<<<<< HEAD
         return $this->belongsToMany(\App\Models\project::class, 'users_id', 'projects_id');
+=======
+<<<<<<< HEAD
+        return $this->belongsToMany(\App\Models\project::class, 'users_id', 'projects_id');
+=======
+        return $this->belongsToMany(\App\Models\Project::class, 'users_id', 'projects_id');
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
+>>>>>>> bbe94287769f5741e2c66cbc687538c945cca4e8
     }
 }

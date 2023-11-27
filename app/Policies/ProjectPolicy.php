@@ -35,7 +35,17 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
+<<<<<<< HEAD
         return $user->hasRole(['project-management', 'admin']);
+=======
+<<<<<<< HEAD
+        return $user->hasRole(['project-management', 'admin']);
+=======
+        return $user
+            
+        ;
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
+>>>>>>> bbe94287769f5741e2c66cbc687538c945cca4e8
     }
 
     /**
@@ -44,7 +54,15 @@ class ProjectPolicy
      */
     public function update(User $user, project $project)
     {
+<<<<<<< HEAD
         return $user->hasRole(['project-management', 'admin']);
+=======
+<<<<<<< HEAD
+        return $user->hasRole(['project-management', 'admin']);
+=======
+        return $user;
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
+>>>>>>> bbe94287769f5741e2c66cbc687538c945cca4e8
     }
 
     /**
@@ -53,7 +71,15 @@ class ProjectPolicy
      */
     public function delete(User $user, project $project)
     {
+<<<<<<< HEAD
         return $user->hasRole(['project-management', 'admin']);
+=======
+<<<<<<< HEAD
+        return $user->hasRole(['project-management', 'admin']);
+=======
+        return $user;
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
+>>>>>>> bbe94287769f5741e2c66cbc687538c945cca4e8
     }
 
     /**

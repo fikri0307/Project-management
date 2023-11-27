@@ -11,9 +11,19 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ColorColumn;
 use App\Filament\Resources\TicketStatusesResource\Pages;
+<<<<<<< HEAD
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Tables\Columns\IconColumn;
+=======
+<<<<<<< HEAD
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\ColorPicker;
+use Filament\Tables\Columns\IconColumn;
+=======
+
+>>>>>>> e8fbb3af32346b6f11e13b5d66ebfe1c8b1586d2
+>>>>>>> bbe94287769f5741e2c66cbc687538c945cca4e8
 
 class TicketStatusesResource extends Resource
 {
