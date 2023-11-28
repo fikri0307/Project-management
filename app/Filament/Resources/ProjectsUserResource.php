@@ -15,6 +15,7 @@ class ProjectsUserResource extends Resource
 {
     protected static ?string $model = projects_user::class;
 
+    protected static ?string $modelLabel = 'Project User';
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
