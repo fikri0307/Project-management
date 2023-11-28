@@ -36,10 +36,8 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-
                         TextInput::make('name')->label('Project Name')->required()->autofocus()
                         ,
-
                         Select::make('owner_id')
                             ->label('Project Manager')
                             ->options( fn() => User::role(['project-management', 'admin'])->get()->pluck('name', 'id')->toArray())
@@ -60,7 +58,7 @@ class ProjectResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table
+        return $table 
             ->columns([
                 TextColumn::make('name')->sortable()->searchable()->label('Name')
                 ,
@@ -79,7 +77,7 @@ class ProjectResource extends Resource
                 '))
             ])
             ->filters([
-                //
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -106,4 +104,5 @@ class ProjectResource extends Resource
             'edit' => Pages\EditProject::route('/{record}/edit'),
         ];
     }    
+
 }
