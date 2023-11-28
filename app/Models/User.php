@@ -44,10 +44,6 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // public function projectsUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
-    // {
-    //     return $this->hasMany(\App\Models\Project_user::class, 'users_id');
-    // }
     public function projectsUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(\App\Models\project::class, 'projects_user', 'users_id', 'projects_id' );
@@ -55,8 +51,7 @@ class User extends Authenticatable
 
     public function tickets(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        // return $this->belongsToMany(\App\Models\Ticket::class, 'users_has_tickets');
-        return $this->belongsToMany(\App\Models\Todo::class, 'users_has_tickets', 'tickets_id', 'users_id');
+        return $this->belongsToMany(\App\Models\tickets::class, 'users_has_tickets', 'tickets_id', 'users_id');
     }
     public function projects()
     {

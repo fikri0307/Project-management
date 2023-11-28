@@ -44,7 +44,7 @@ class ProjectResource extends Resource
                             ->required()
                             ->disablePlaceholderSelection()
                         ,
-                        Textarea::make('description')
+                        Textarea::make('description')                           
                         ,
                         Select::make('project_statuses_id')
                             ->label('Status')
