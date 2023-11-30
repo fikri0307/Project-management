@@ -15,7 +15,7 @@ class PermissionsPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('List Permissions');
+        return $user->can('List Permissions') || $user->hasRole(['project-management', 'admin']) ;
     }
 
     /**
@@ -23,7 +23,7 @@ class PermissionsPolicy
      */
     public function view(User $user, permissions $permissions): bool
     {
-        return $user->can('View Permissions');
+        return $user->can('View Permissions') || $user->hasRole(['project-management', 'admin']) ;
     }
 
     /**
@@ -31,7 +31,7 @@ class PermissionsPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('Create Permissions');
+        return $user->can('Create Permissions') || $user->hasRole(['project-management', 'admin']) ;
     }
 
     /**
@@ -39,7 +39,7 @@ class PermissionsPolicy
      */
     public function update(User $user, permissions $permissions): bool
     {
-        return $user->can('Update Permissions');
+        return $user->can('Update Permissions') || $user->hasRole(['project-management', 'admin']) ;
     }
 
     /**
@@ -47,7 +47,7 @@ class PermissionsPolicy
      */
     public function delete(User $user, permissions $permissions): bool
     {
-        return $user->can('Delete Permissions');
+        return $user->can('Delete Permissions') || $user->hasRole(['project-management', 'admin']) ;
     }
 
 

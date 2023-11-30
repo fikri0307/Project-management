@@ -4,16 +4,12 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
-use App\Models\Roles;
+use App\Models\roles;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\RolesResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\RolesResource\RelationManagers;
+use App\Models\permissions;
 
 class RolesResource extends Resource
 {
@@ -27,13 +23,21 @@ class RolesResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')->required(),
-                TextInput::make('owner')->required(),
-                TextInput::make('description'),
-                TextInput::make('project_statuses_id'), 
-                // TextColumn::make('permissions')->resolve(function (roles $role) {
-                //     return $role->permissions->pluck('name')->implode(', ');
-                // }),
+                Forms\Components\Grid::make()
+                    ->columns(1)
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label(__('Role name'))
+                            ->unique(table: permissions::class, column: 'name')
+                            ->maxLength(255)
+                            ->required(),
+
+                        Forms\Components\CheckboxList::make('permissions')
+                            ->label(__('Permissions'))
+                            ->required()
+                            ->columns(4)
+                            ->relationship('permissions', 'name'),
+                    ]),
             ]);
     }
 
@@ -41,17 +45,15 @@ class RolesResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()->searchable()->label('nama'),
-                TextColumn::make('guard_name')->sortable()->searchable(),
-                TextColumn::make('created_at')->sortable()->searchable()->label('Status'),
-                // Select::make('permissions')
-                //     ->fromModel(Permission::class, 'name', 'name')
-                //     ->multiple(),
+                Tables\Columns\TextColumn::make('name')
+                    ->label(__('Permission name'))
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TagsColumn::make('permissions.name')
+                    ->label(__('Permissions'))
+                    ->limit(1),
             ])
-            // ->onBeforeSave(function (Role $role) {
-            //     $permissions = request('permissions', []);
-            //     $role->syncPermissions($permissions);
-            // })
             ->filters([
                 //
             ])
@@ -62,20 +64,20 @@ class RolesResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListRoles::route('/create'),
             //  'create' => Pages\CreateRoles::route('/create'),
-            'edit' => Pages\EditRoles::route('/{record}/edit'),
+            // 'edit' => Pages\EditRoles::route('/{record}/edit'),
         ];
-    }    
+    }
 }
