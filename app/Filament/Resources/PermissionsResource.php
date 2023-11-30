@@ -34,9 +34,16 @@ class PermissionsResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')->required()->autofocus(),
+                Forms\Components\Card::make()
+                    ->schema([
+                        Forms\Components\Grid::make()
+                            ->schema([
+                TextInput::make('name')->required()->autofocus()->unique(),
                 TextInput::make('guard_name'),
-            ]);
+                                    ])  
+                            ])
+                    ]);
+            
     }
 
     public static function table(Table $table): Table
@@ -46,8 +53,8 @@ class PermissionsResource extends Resource
                 TextColumn::make('id')->sortable()->searchable(),
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('guard_name')->sortable()->searchable(),
-                TextColumn::make('updated_at')->dateTime('Y-m-d')->sortable()->searchable(),
-                TextColumn::make('created_at')->dateTime('Y-m-d')->sortable(),
+                TextColumn::make('updated_at')->date()->sortable()->searchable(),
+                TextColumn::make('created_at')->date()->sortable(),
             ])
             ->filters([
                 //

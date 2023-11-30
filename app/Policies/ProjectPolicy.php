@@ -5,18 +5,20 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\project;
 use App\Models\Project_statuses;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 
 class ProjectPolicy
 {
+    use HandlesAuthorization;
     /**
      * Determine whether the user can view any models.
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole(['project-management', 'admin']);
+        return $user->can('List Project') || $user->hasRole(['project-management', 'admin']);
     }
 
     /**
@@ -25,7 +27,7 @@ class ProjectPolicy
      */
     public function view(User $user, project $project)
     {
-        return $user->hasRole(['project-management', 'admin']);
+        return $user->can('View Project') || $user->hasRole(['project-management', 'admin']);
     }
 
     /**
@@ -35,7 +37,7 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole(['project-management', 'admin']);
+        return $user->can('Create Project') || $user->hasRole(['project-management', 'admin']);
     }
 
     /**
@@ -44,7 +46,7 @@ class ProjectPolicy
      */
     public function update(User $user, project $project)
     {
-        return $user->hasRole(['project-management', 'admin']);
+        return $user->can('Update Project') || $user->hasRole(['project-management', 'admin']);
     }
 
     /**
@@ -53,24 +55,24 @@ class ProjectPolicy
      */
     public function delete(User $user, project $project)
     {
-        return $user->hasRole(['project-management', 'admin']);
+        return $user->can('Delete Project') || $user->hasRole(['project-management', 'admin']);
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, project $project)
-    {
-        //
-    }
+    // /**
+    //  * Determine whether the user can restore the model.
+    //  * @return \Illuminate\Auth\Access\Response|bool
+    //  */
+    // public function restore(User $user, project $project)
+    // {
+    //     //
+    // }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, project $project)
-    {
-        //
-    }
+    // /**
+    //  * Determine whether the user can permanently delete the model.
+    //  * @return \Illuminate\Auth\Access\Response|bool
+    //  */
+    // public function forceDelete(User $user, project $project)
+    // {
+    //     //
+    // }
 }

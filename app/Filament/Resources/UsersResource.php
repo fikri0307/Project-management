@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UsersResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UsersResource\RelationManagers;
+use App\Models\roles;
 use Illuminate\Support\Facades\Password;
 
 use function Laravel\Prompts\password;
@@ -41,11 +42,6 @@ class UsersResource extends Resource
                     TextInput::make('name')->required(),
                     TextInput::make('email')->required()->email(),
                     TextInput::make('password')->required()->password(),
-                    Select::make('Roles')
-                        ->options([
-                            'Aktif' => 'admin',
-                            'Tidak aktif' => 'kroco'
-                        ]),
                 // ])
                 ])
                 ->columns(2),

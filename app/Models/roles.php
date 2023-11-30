@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasPermissions;
 
-class roles extends Model
+class roles extends \Spatie\Permission\Models\Role
 {
-    use HasFactory;
+    use HasPermissions;
     
     public $table = 'roles';
 

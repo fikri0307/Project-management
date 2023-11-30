@@ -31,6 +31,9 @@ class RolesResource extends Resource
                 TextInput::make('owner')->required(),
                 TextInput::make('description'),
                 TextInput::make('project_statuses_id'), 
+                // TextColumn::make('permissions')->resolve(function (roles $role) {
+                //     return $role->permissions->pluck('name')->implode(', ');
+                // }),
             ]);
     }
 
@@ -41,7 +44,14 @@ class RolesResource extends Resource
                 TextColumn::make('name')->sortable()->searchable()->label('nama'),
                 TextColumn::make('guard_name')->sortable()->searchable(),
                 TextColumn::make('created_at')->sortable()->searchable()->label('Status'),
+                // Select::make('permissions')
+                //     ->fromModel(Permission::class, 'name', 'name')
+                //     ->multiple(),
             ])
+            // ->onBeforeSave(function (Role $role) {
+            //     $permissions = request('permissions', []);
+            //     $role->syncPermissions($permissions);
+            // })
             ->filters([
                 //
             ])

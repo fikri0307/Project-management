@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
-class permissions extends Model
+class permissions extends \Spatie\Permission\Models\Permission
 {
-    use HasFactory;
-    protected $fillable = ['id','name','guard_name','updated_at','created _at'];
+    // use HasFactory ,HasRoles;
+    // protected $fillable = ['id','name','guard_name','updated_at','created _at'];
 }
