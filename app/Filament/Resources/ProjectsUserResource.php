@@ -17,7 +17,7 @@ class ProjectsUserResource extends Resource
 
     protected static ?string $modelLabel = 'Project User';
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?int $navigationSort = 4;
 

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Project;
@@ -21,6 +22,13 @@ use App\Models\Users;
 use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Illuminate\Support\HtmlString;
+
+
+// $posts = project::withCount('id')->get();
+ 
+// foreach ($posts as $project) {
+//     echo $project   ->project_count;
+// }
 
 class ProjectResource extends Resource
 {
@@ -73,9 +81,12 @@ class ProjectResource extends Resource
                         <span class="filament-tables-color-column relative flex h-6 w-6 rounded-md"
                             style="background-color: ' . $record->projectStatus->color . '">
                         </span>
-                    </div>
-                '))
-            ])
+                    </div' )),
+                    // TextColumn::make(''),
+                //  TextColumn::make('project_count')
+                //     ->counts('project'),
+                   
+            ])  
             ->filters([
 
             ])

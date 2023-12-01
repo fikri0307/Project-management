@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Post;
 
 class project extends Model
 {
+    
     use HasFactory, SoftDeletes;
     
     public $table = 'projects';
@@ -17,6 +19,7 @@ class project extends Model
     'description',
     'owner_id',
     'project_statuses_id'
+
     ];
 
     protected $casts = [
