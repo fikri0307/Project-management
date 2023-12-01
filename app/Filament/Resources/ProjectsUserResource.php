@@ -10,7 +10,9 @@ use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use App\Filament\Resources\ProjectsUserResource\Pages;
 use Filament\Tables\Columns\BadgeColumn;
-
+use Filament\Tables\Columns\TagsColumn;
+use Filament\Tables\Columns\IconColumn;
+use Illuminate\Support\HtmlString;
 class ProjectsUserResource extends Resource
 {
     protected static ?string $model = projects_user::class;
@@ -34,8 +36,11 @@ class ProjectsUserResource extends Resource
         
         return $table
             ->columns([
+                TextColumn::make('projects.name')->sortable()->searchable()->weight('bold')->sortable(),
+                TextColumn::make('projects.description')->label('Description')->size('sm')->color('secondary'),
                 BadgeColumn::make('users.name')->sortable()->searchable()->label('Team')->colors(['warning']),
-                TextColumn::make('projects.name')->sortable()->searchable(),
+               
+             
             ])
             ->filters([
                 //
