@@ -18,8 +18,11 @@ use App\Models\Project_statuses;
 use App\Models\projects_user;
 use App\Models\User;
 use App\Models\Users;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\IconColumn;
 use Illuminate\Support\HtmlString;
 
 class ProjectResource extends Resource
@@ -36,10 +39,8 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-
                         TextInput::make('name')->label('Project Name')->required()->autofocus()
                         ,
-
                         Select::make('owner_id')
                             ->label('Project Manager')
                             ->options( fn() => User::role(['project-management', 'admin'])->get()->pluck('name', 'id')->toArray())
@@ -60,26 +61,67 @@ class ProjectResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table
+        return $table 
             ->columns([
-                TextColumn::make('name')->sortable()->searchable()->label('Name')
+                Stack::make([
+                    Split::make([
+                    Stack::make([
+                TextColumn::make('name')->sortable()->searchable()->label('Name')->size('lg')->weight('bold')
                 ,
-                TextColumn::make('owner.name')->sortable()->label('PM')
+                TextColumn::make('description')->sortable()->searchable()->label('')->size('sm')->weight('bold')->color('secondary')
+                ,
+                TextColumn::make('')->sortable()
+                ,
+                Stack::make([
+                    Split::make([
+
+                BadgeColumn::make('projectStatus.name')->sortable()->label('Status')
+                ->colors([
+                    'success' => 'Done',
+                    'secondary' => 'In Progress',
+                        ])
+                ->formatStateUsing(fn($record) => new HtmlString
+                ('
+                    <div class="flex items-center gap-2">
+                        <span>' . $record->projectStatus->name . '</span>    
+                    </div>
+                ')),
+                
+                        
+                ])
+                ])
+                ]),
+                Stack::make([
+                TextColumn::make('')->sortable()->placeholder('Project Manager')->size('lg')->weight('bold')
+                ,
+                TextColumn::make('owner.name')->sortable()->label('PM')->weight('bold')->color('primary')
+                ,
+                TextColumn::make('')->sortable()
+                ,
+                TextColumn::make('')->sortable()
+                ,
+                ]),
+                Stack::make([
+                TextColumn::make('')->sortable()->placeholder('Assign')->size('lg')->weight('bold')
                 ,
                 TagsColumn::make('users.name')->label('Assign')->limit(3)
                 ,
-                TextColumn::make('projectStatus.name')->sortable()->label('Status')
-                    ->formatStateUsing(fn($record) => new HtmlString('
-                    <div class="flex items-center gap-2">
-                        <span>' . $record->projectStatus->name . '</span>
-                        <span class="filament-tables-color-column relative flex h-6 w-6 rounded-md"
-                            style="background-color: ' . $record->projectStatus->color . '">
-                        </span>
-                    </div>
-                '))
+                TextColumn::make('')->sortable()
+                ,
+                TextColumn::make('')->sortable()
+                ,
+                ]),
+                        
+              //  <span class="filament-tables-color-column relative flex h-4 w-4 rounded-md"
+                ///            style="background-color: ' . $record->projectStatus->color . '">
+                   //     </span>
+            
+                
+                ])
+            ]),
             ])
             ->filters([
-                //
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -106,4 +148,5 @@ class ProjectResource extends Resource
             'edit' => Pages\EditProject::route('/{record}/edit'),
         ];
     }    
+
 }

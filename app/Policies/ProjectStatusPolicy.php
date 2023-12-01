@@ -4,17 +4,19 @@ namespace App\Policies;
 
 use App\Models\Project_statuses;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 class ProjectStatusPolicy
 {
+    use HandlesAuthorization;
     /**
      * Determine whether the user can view any models.
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole('admin');
+        return $user->can('List Project Statuses') || $user->hasRole('admin');
     }
 
     /**
@@ -23,7 +25,7 @@ class ProjectStatusPolicy
      */
     public function view(User $user, Project_statuses $projectStatuses)
     {
-        return $user->hasRole('admin');
+        return $user->can('View Project Statuses') || $user->hasRole('admin');
     }
 
     /**

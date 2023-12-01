@@ -35,6 +35,18 @@ class project extends Model
         'project_statuses_id' => 'required',
         'projectUsers' => 'required'
     ];
+    public static function boot() {
+        
+        parent::boot();
+
+        static::saved(function (project $item) {
+            if ($item->project_statuses_id) {
+                $query = project::where('id', '<>', $item->id)
+                    ->where('Done', true);
+            }
+        });
+
+    }
 
     public function projectStatus(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

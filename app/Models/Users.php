@@ -17,7 +17,7 @@ class Users extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name','email','updated_at','password'];
+    protected $fillable = ['name','email','updated_at','password', 'email_verified_at',];
 
  /**
      * The attributes that should be hidden for serialization.
@@ -72,6 +72,7 @@ class Users extends Model
     {
         return $this->belongsToMany(\App\Models\project::class, 'users_id', 'projects_id');
     }
+
 
 }
 
