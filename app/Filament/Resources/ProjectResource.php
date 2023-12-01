@@ -24,13 +24,15 @@ use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\IconColumn;
 use Illuminate\Support\HtmlString;
+use Filament\Support\Colors\Color; //c
+use Filament\Support\Facades\FilamentColor;
 
 class ProjectResource extends Resource
 {
     protected static ?string $model = project::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
-
+    
     protected static ?int $navigationSort = 2;
 
     protected static ?string $modelLabel = 'Project';
@@ -94,7 +96,7 @@ class ProjectResource extends Resource
                 Stack::make([
                 TextColumn::make('')->sortable()->placeholder('Project Manager')->size('lg')->weight('bold')
                 ,
-                TextColumn::make('owner.name')->sortable()->label('PM')->weight('bold')->color('primary')
+                TextColumn::make('owner.name')->sortable()->label('PM')->weight('bold')->color('success')
                 ,
                 TextColumn::make('')->sortable()
                 ,

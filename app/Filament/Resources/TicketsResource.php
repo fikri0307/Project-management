@@ -188,11 +188,11 @@ class TicketsResource extends Resource
                 Split::make([TextColumn::make('')->sortable()
                 ,
                 Stack::make ([
-                TextColumn::make('')->sortable()->placeholder('Created At')->size('sm')->color('')
+                TextColumn::make('')->sortable()->placeholder('Due At')->size('sm')->color('')
                 ,    
                 TextColumn::make('created_at')->date()->size('sm')->Icon('heroicon-o-clock')->color('primary')
                 ,
-                TextColumn::make('')->sortable()->placeholder('Completed At')->size('sm')->color('')
+                TextColumn::make('')->sortable()->placeholder('Done At')->size('sm')->color('')
                 ,
                 TextColumn::make('complete_at')->date()->size('sm')->Icon('heroicon-o-clock')->color('success')
                 ,
