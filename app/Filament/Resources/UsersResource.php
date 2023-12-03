@@ -55,11 +55,11 @@ class UsersResource extends Resource
                             )
                             ->maxLength(255),
 
-                        // TextInput::make('password')
-                        // ->label('Password')
-                        // ->required()
+                        TextInput::make('password')
+                        ->label('Password')
+                        ->required()
 
-                        // ,
+                        ,
 
                         CheckboxList::make('roles')
                             ->label('Permission roles')

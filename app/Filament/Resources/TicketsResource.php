@@ -28,11 +28,11 @@ class TicketsResource extends Resource
 {
     protected static ?string $model = tickets::class;
 
-    protected static ?string $modelLabel = 'Todo';
+    protected static ?string $modelLabel = 'Tickets';
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
-    protected static ?string $navigationLabel = 'Todo';
+    protected static ?string $navigationLabel = 'Tickets';
 
     protected static ?int $navigationSort = 5;
 

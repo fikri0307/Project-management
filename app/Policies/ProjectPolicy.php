@@ -18,7 +18,7 @@ class ProjectPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('List Project') || $user->hasRole(['project-management', 'admin']);
+        return $user->can('List Project');
     }
 
     /**
@@ -27,7 +27,7 @@ class ProjectPolicy
      */
     public function view(User $user, project $project)
     {
-        return $user->can('View Project') || $user->hasRole(['project-management', 'admin']);
+        return $user->can('View Project');
     }
 
     /**
@@ -37,7 +37,7 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
-        return $user->can('Create Project') || $user->hasRole(['project-management', 'admin']);
+        return $user->can('Create Project');
     }
 
     /**
@@ -46,7 +46,7 @@ class ProjectPolicy
      */
     public function update(User $user, project $project)
     {
-        return $user->can('Update Project') || $user->hasRole(['project-management', 'admin']);
+        return $user->can('Update Project');
     }
 
     /**
@@ -55,7 +55,7 @@ class ProjectPolicy
      */
     public function delete(User $user, project $project)
     {
-        return $user->can('Delete Project') || $user->hasRole(['project-management', 'admin']);
+        return $user->can('Delete Project');
     }
 
     // /**
