@@ -20,7 +20,7 @@ class tickets extends Model
         'ticket_statuses_id',
         'projects_id',
         'team_id',
-        'created_at',
+        'due_at',
         'complete_at'
         // 'code',
     ];

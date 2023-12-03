@@ -68,7 +68,7 @@ class ProjectResource extends Resource
                     Stack::make([
                 TextColumn::make('name')->sortable()->searchable()->label('Name')->size('lg')->weight('bold')
                 ,
-                TextColumn::make('description')->sortable()->searchable()->label('')->size('sm')->weight('bold')->color('secondary')
+                TextColumn::make('description')->sortable()->searchable()->label('')->size('sm')->color('secondary')
                 ,
                 TextColumn::make('')->sortable()
                 ,

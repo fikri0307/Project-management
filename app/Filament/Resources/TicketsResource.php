@@ -49,8 +49,8 @@ class TicketsResource extends Resource
                             ->label('Projects')
                             ->options(fn() => projects_user::where('users_id', Auth::id())->with('projects')->get()
                                 ->pluck('projects.name', 'projects.id'))
-                            ->default(fn() => projects_user::where('users_id', Auth::id())->with('projects')->get()
-                                ->pluck('projects.name', 'projects.id'))
+                            // ->default(fn() => projects_user::where('users_id', Auth::id())->with('projects')->get()
+                            //     ->pluck('projects.name', 'projects.id'))
                             // ->disablePlaceholderSelection()
                             ->required()
                         ,
@@ -92,7 +92,7 @@ class TicketsResource extends Resource
                 ])->columns(1),
                 Grid::make()
                 ->schema([
-                        DatePicker::make('created_at')->label('Due At')
+                        DatePicker::make('due_at')->label('Due At')
                         ,
                         DatePicker::make('complete_at')->label('Done At')
 
@@ -188,11 +188,11 @@ class TicketsResource extends Resource
                 Split::make([TextColumn::make('')->sortable()
                 ,
                 Stack::make ([
-                TextColumn::make('')->sortable()->placeholder('Created At')->size('sm')->color('')
+                TextColumn::make('')->sortable()->placeholder('Due At')->size('sm')->color('')
                 ,    
-                TextColumn::make('created_at')->date()->size('sm')->Icon('heroicon-o-clock')->color('primary')
+                TextColumn::make('due_at')->date()->size('sm')->Icon('heroicon-o-clock')->color('primary')
                 ,
-                TextColumn::make('')->sortable()->placeholder('Completed At')->size('sm')->color('')
+                TextColumn::make('')->sortable()->placeholder('Done At')->size('sm')->color('')
                 ,
                 TextColumn::make('complete_at')->date()->size('sm')->Icon('heroicon-o-clock')->color('success')
                 ,
