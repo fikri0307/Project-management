@@ -21,7 +21,7 @@ class TicketStatusesResource extends Resource
 
     protected static ?string $modelLabel = 'Todo Status';
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-pie';
 
     protected static ?string $navigationLabel = 'Todo Status';
 

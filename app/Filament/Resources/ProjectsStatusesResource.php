@@ -20,7 +20,7 @@ class ProjectsStatusesResource extends Resource
 
     protected static ?string $modelLabel = 'Project Status';
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
     protected static ?string $navigationLabel = 'Project Status';
 
