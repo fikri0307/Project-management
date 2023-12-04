@@ -15,7 +15,7 @@ class RolesPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('List Roles') ;
+        return $user->can('List Roles') || $user->hasRole(['project-management', 'admin']) ;
     }
 
     /**
@@ -23,7 +23,7 @@ class RolesPolicy
      */
     public function view(User $user, roles $roles): bool
     {
-        return $user->can('View Roles') ;
+        return $user->can('View Roles') || $user->hasRole(['project-management', 'admin']) ;
     }
 
     /**
@@ -31,7 +31,7 @@ class RolesPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('Create Roles');
+        return $user->can('Create Roles') || $user->hasRole(['project-management', 'admin']) ;
     }
 
     /**
@@ -39,7 +39,7 @@ class RolesPolicy
      */
     public function update(User $user, roles $roles): bool
     {
-        return $user->can('Update Roles') ;
+        return $user->can('Update Roles') || $user->hasRole(['project-management', 'admin']) ;
     }
 
     /**
@@ -47,7 +47,7 @@ class RolesPolicy
      */
     public function delete(User $user, roles $roles): bool
     {
-        return $user->can('Delete Roles') ;
+        return $user->can('Delete Roles') || $user->hasRole(['project-management', 'admin']) ;
     }
 
     /**

@@ -12,7 +12,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Grid;
+
 use App\Filament\Resources\TicketsResource\Pages;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\BadgeColumn;
@@ -20,10 +20,13 @@ use App\Models\project;
 use App\Models\projects_user;
 use App\Models\ticket_statuses;
 use App\Models\User;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Auth;
-
+use Filament\Forms\Components\Grid;
+use Filament\Tables\Columns\IconColumn;
 class TicketsResource extends Resource
 {
     protected static ?string $model = tickets::class;
@@ -101,31 +104,110 @@ class TicketsResource extends Resource
     {
         return $table
             ->columns([
+                
+            Split::make ([
+                //Grid::make()
+               // ->schema([
+                Stack::make([
+                TextColumn::make('')->sortable()->placeholder('Project')->size('sm')->color('secondary')
+                ,  
                 TextColumn::make('projects.name')->sortable()->searchable()->label('Project')
                 ,
-                TextColumn::make('name')->sortable()->searchable()->label('Todo')
+                Split::make([
+                TextColumn::make('')->sortable()->placeholder('Manager:')->size('sm')->color('secondary')
+                        ,
+                        TextColumn::make('owner.name')->sortable()->searchable()->label('PM')->color('success')
+                        ,  
+                        TextColumn::make('')->sortable()
                 ,
-                BadgeColumn::make('team.name')->sortable()->searchable()->label('Team')->colors(['primary'])
+                TextColumn::make('')->sortable()
                 ,
-                TextColumn::make('owner.name')->sortable()->searchable()->label('PM')
+                TextColumn::make('')->sortable()
                 ,
-                TextColumn::make('status.name')
+                TextColumn::make('')->sortable()
+                
+                ]),
+
+                TextColumn::make('')->sortable()
+                ,
+                
+               
+
+            Split::make([
+                //Grid::make()
+                //->schema([
+                BadgeColumn::make('status.name')
                 ->label(__('Status'))
-                ->formatStateUsing(fn($record) => new HtmlString('
+                ->colors([ 
+                    'success' => 'Done',
+                    'secondary' => 'In Progress',
+                        ])
+                ->formatStateUsing(fn($record) => new HtmlString
+                ('
                     <div class="flex items-center gap-1">
-                        <span>' . $record->status->name . '</span>
-                        <span class="filament-tables-color-column relative flex h-6 w-6 rounded-md"
-                            style="background-color: ' . $record->status->color . '">
-                        </span>
+                        <span color: green;>' . $record->status->name . '</span>             
                     </div>
-                '))
-                ->sortable()
-                ->searchable()
+                ')),
+                
+               // ])->columns(1) //schema
+                ])
+                ]),
+                
+               
+                Stack::make ([
+                    
+                    Split::make([
+                        TextColumn::make('')->sortable()->placeholder('Assignee:')->size('sm')->color('secondary')
+                        ,                 
+                        TextColumn::make('team.name')->sortable()->searchable()->label('Team')->color('primary')
+                        , 
+                        TextColumn::make('')->sortable()
+                        ,
+                        TextColumn::make('')->sortable()
+                        ,                 
+                        TextColumn::make('')->sortable()
+                        ,
+                        
+                        ]),
+                    TextColumn::make('name')->sortable()->searchable()->label('Todo')
+                    ,
+                    TextColumn::make('')->sortable()
+                    ,
+                    TextColumn::make('')->sortable()
+                    ,
+                    TextColumn::make('')->sortable()
+                    ,
+                    
+                    
+                    
+                    
+                    
+                    
+                ]),
+              
+                Split::make([TextColumn::make('')->sortable()
                 ,
-                TextColumn::make('created_at')->date()
+                Stack::make ([
+                TextColumn::make('')->sortable()->placeholder('Due At')->size('sm')->color('')
+                ,    
+                TextColumn::make('created_at')->date()->size('sm')->Icon('heroicon-o-clock')->color('primary')
                 ,
-                TextColumn::make('complete_at')->date()
-        
+                TextColumn::make('')->sortable()->placeholder('Done At')->size('sm')->color('')
+                ,
+                TextColumn::make('complete_at')->date()->size('sm')->Icon('heroicon-o-clock')->color('success')
+                ,
+                TextColumn::make('')->sortable()
+                ,
+                ])
+                ])
+               
+             
+          
+               // ->colors(['success']),
+           
+               
+               // ])->columns(1) //schema
+                ])
 
             ])
             ->filters([
@@ -154,5 +236,12 @@ class TicketsResource extends Resource
             // 'create' => Pages\CreateTickets::route('/create'),
             // 'edit' => Pages\EditTickets::route('/{record}/edit'),
         ];
-    }    
+    }  
+    public static function getWidgets(): array
+    {
+        return [
+            TicketsResource\Widgets\StatsOverview::class,
+            TicketsResource\Widgets\BlogPostsChart::class,
+        ];
+    }  
 }

@@ -23,7 +23,7 @@ class TicketStatusesPolicy
      */
     public function view(User $user, ticket_statuses $ticketStatuses): bool
     {
-        return $user->can('View Ticket Statuses');  
+        return $user->can('View Ticket Statuses');
     }
 
     /**

@@ -13,15 +13,16 @@ class FilamentServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(Resource::class, function () {
-            return [
-                ProjectsStatusesResource::class,
-            ];
-        });
+        // $this->app->singleton(Resource::class, function () {
+        //     return [
+        //         ProjectsStatusesResource::class,
+        //     ];
+        // });
 
-        $this->app['filament.auth']->roles([
-            'admin',
-        ]);
+        // $this->app['filament.auth']->roles([
+        //     'admin',
+        // ]);
+        
     }
 
     /**

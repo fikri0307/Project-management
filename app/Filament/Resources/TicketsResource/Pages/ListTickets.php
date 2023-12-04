@@ -16,4 +16,11 @@ class ListTickets extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            TicketsResource\Widgets\StatsOverview::class,
+            //TicketsResource\Widgets\BlogPostsChart::class,
+        ];
+    }
 }

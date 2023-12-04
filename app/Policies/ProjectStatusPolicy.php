@@ -16,7 +16,7 @@ class ProjectStatusPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('List Project Statuses');
+        return $user->can('List Project Statuses') || $user->hasRole('admin');
     }
 
     /**
@@ -25,7 +25,7 @@ class ProjectStatusPolicy
      */
     public function view(User $user, Project_statuses $projectStatuses)
     {
-        return $user->can('View Project Statuses');
+        return $user->can('View Project Statuses') || $user->hasRole('admin');
     }
 
     /**

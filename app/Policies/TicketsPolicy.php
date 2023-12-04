@@ -15,7 +15,7 @@ class TicketsPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('List Tickets');
+        return $user->can('List Tickets')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
@@ -23,7 +23,7 @@ class TicketsPolicy
      */
     public function view(User $user, tickets $tickets): bool
     {
-        return $user->can('View Tickets');
+        return $user->can('View Tickets')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
@@ -31,7 +31,7 @@ class TicketsPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('Create Tickets');
+        return $user->can('Create Tickets')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
@@ -39,7 +39,7 @@ class TicketsPolicy
      */
     public function update(User $user, tickets $tickets): bool
     {
-        return $user->can('Update Tickets');
+        return $user->can('Update Tickets')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
@@ -47,7 +47,7 @@ class TicketsPolicy
      */
     public function delete(User $user, tickets $tickets): bool
     {
-        return $user->can('Delete Tickets');
+        return $user->can('Delete Tickets')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**

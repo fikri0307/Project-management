@@ -33,7 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         Project_statuses::class => ProjectStatusPolicy::class,
         roles::class => RolesPolicy::class,
         tickets::class => TicketsPolicy::class,
-        ticket_statuses::class => TicketStatusesPolicy::class,
+        ticket_statuses::class =>  TicketStatusesPolicy::class,
         Users::class => UsersPolicy::class,
     
     ];

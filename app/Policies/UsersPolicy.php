@@ -15,7 +15,7 @@ class UsersPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('List Users');
+        return $user->can('List Users')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
@@ -23,7 +23,7 @@ class UsersPolicy
      */
     public function view(User $user, Users $users): bool
     {
-        return $user->can('View Users');
+        return $user->can('View Users')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
@@ -31,7 +31,7 @@ class UsersPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('Create Users');
+        return $user->can('Create Users')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
@@ -39,7 +39,7 @@ class UsersPolicy
      */
     public function update(User $user, Users $users): bool
     {
-        return $user->can('Update Users');
+        return $user->can('Update Users')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
@@ -47,7 +47,7 @@ class UsersPolicy
      */
     public function delete(User $user, Users $users): bool
     {
-        return $user->can('Delete Users');
+        return $user->can('Delete Users')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
