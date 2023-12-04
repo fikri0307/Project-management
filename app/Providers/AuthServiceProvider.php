@@ -28,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Models\Project_statuses' => 'App\Policies\ProjectStatusPolicy',
+        'App\Models\ticket_statuses' => 'App\Policies\TicketStatusesPolicy',
         permissions::class => PermissionsPolicy::class,
         project::class => ProjectPolicy::class,
         Project_statuses::class => ProjectStatusPolicy::class,

@@ -16,7 +16,7 @@ class ProjectStatusPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('List Project Statuses') || $user->hasRole('admin');
+        return $user->can('List Project Status') || $user->hasRole('admin');
     }
 
     /**
@@ -25,7 +25,7 @@ class ProjectStatusPolicy
      */
     public function view(User $user, Project_statuses $projectStatuses)
     {
-        return $user->can('View Project Statuses') || $user->hasRole('admin');
+        return $user->can('View Project Status') || $user->hasRole('admin');
     }
 
     /**
@@ -34,7 +34,7 @@ class ProjectStatusPolicy
      */
     public function create(User $user)
     {
-        return $user->can('Create Project Statuses');
+        return $user->can('Create Project Status');
     }
 
     /**
@@ -43,7 +43,7 @@ class ProjectStatusPolicy
      */
     public function update(User $user, Project_statuses $projectStatuses)
     {
-        return $user->can('Update Project Statuses');
+        return $user->can('Update Project Status');
     }
 
     /**
@@ -52,7 +52,7 @@ class ProjectStatusPolicy
      */
     public function delete(User $user, Project_statuses $projectStatuses)
     {
-        return $user->can('Delete Project Statuses');
+        return $user->can('Delete Project Status');
     }
 
     /**

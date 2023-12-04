@@ -19,11 +19,11 @@ class TicketStatusesResource extends Resource
 {
     protected static ?string $model = ticket_statuses::class;
 
-    protected static ?string $modelLabel = 'Ticket Statuses';
+    protected static ?string $modelLabel = 'Todo Status';
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
-    protected static ?string $navigationLabel = 'Ticket Status';
+    protected static ?string $navigationLabel = 'Todo Status';
 
     protected static ?int $navigationSort = 6;
 

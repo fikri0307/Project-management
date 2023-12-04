@@ -44,16 +44,32 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function projectsUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function owner(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(\App\Models\project::class, 'projects_user', 'users_id', 'projects_id' );
+        return $this->hasMany(project::class, 'owner_id', 'id');
     }
 
-    public function tickets(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function projectsUsers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(\App\Models\tickets::class, 'users_has_tickets', 'tickets_id', 'users_id');
+        return $this->belongsToMany(\App\Models\project::class, 'projects_user', 'users_id', 'projects_id' )->withPivot(['roles']);
     }
+
+    public function ticketsOwned(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(tickets::class, 'owner_id', 'id');
+    }
+
+    public function ticketsResponsible(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(tickets::class, 'team_id', 'id');
+    }
+
     public function projects()
+    {
+        return $this->belongsToMany(\App\Models\project::class, 'users_id', 'projects_id');
+    }
+
+    public function users()
     {
         return $this->belongsToMany(\App\Models\project::class, 'users_id', 'projects_id');
     }

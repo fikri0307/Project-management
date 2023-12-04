@@ -3,11 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\ticket_statuses;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class TicketStatusesPolicy
+class UserPolicy
 {
     use HandlesAuthorization;
     /**
@@ -15,15 +14,15 @@ class TicketStatusesPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('List Todo Status') || $user->hasRole('admin');
+        return $user->can('List Users')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, ticket_statuses $ticketStatuses): bool
+    public function view(User $user, User $model): bool
     {
-        return $user->can('View Todo Status') || $user->hasRole('admin');
+        return $user->can('View Users')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
@@ -31,29 +30,29 @@ class TicketStatusesPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('Create Todo Status') || $user->hasRole('admin');
+        return $user->can('Create Users')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, ticket_statuses $ticketStatuses): bool
+    public function update(User $user, User $model): bool
     {
-        return $user->can('Update Todo Status') || $user->hasRole('admin');
+        return $user->can('Update Users')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, ticket_statuses $ticketStatuses): bool
+    public function delete(User $user, User $model): bool
     {
-        return $user->can('Delete Todo Status') || $user->hasRole('admin');
+        return $user->can('Delete Users')|| $user->hasRole(['project-management', 'admin']);
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    // public function restore(User $user, ticket_statuses $ticketStatuses): bool
+    // public function restore(User $user, User $model): bool
     // {
     //     //
     // }
@@ -61,7 +60,7 @@ class TicketStatusesPolicy
     // /**
     //  * Determine whether the user can permanently delete the model.
     //  */
-    // public function forceDelete(User $user, ticket_statuses $ticketStatuses): bool
+    // public function forceDelete(User $user, User $model): bool
     // {
     //     //
     // }

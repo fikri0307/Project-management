@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Users;
+use App\Models\User;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Illuminate\Support\Carbon;
@@ -16,16 +17,11 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\CheckboxList;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UsersResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\UsersResource\RelationManagers;
-use App\Models\roles;
-use Illuminate\Support\Facades\Password;
-
-use function Laravel\Prompts\password;
 
 class UsersResource extends Resource
 {
-    protected static ?string $model = Users::class;
+    // protected static ?string $model = Users::class;
+    protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
@@ -57,7 +53,7 @@ class UsersResource extends Resource
 
                         TextInput::make('password')
                         ->label('Password')
-                        ->required()
+                        // ->required()
 
                         ,
 
