@@ -22,6 +22,7 @@ class TicketStatusPolicy
     public function view(User $user, ticket_statuses $ticketStatuses): bool
     {
         return $user->can('View Todo Status');
+     
     }
 
     /**
