@@ -28,13 +28,13 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Models\Project_statuses' => 'App\Policies\ProjectStatusPolicy',
-        'App\Models\ticket_statuses' => 'App\Policies\TicketStatusPolicy',
         permissions::class => PermissionsPolicy::class,
         project::class => ProjectPolicy::class,
         Project_statuses::class => ProjectStatusPolicy::class,
         roles::class => RolesPolicy::class,
         tickets::class => TicketsPolicy::class,
-        ticket_statuses::class =>  TicketStatusesPolicy::class,
+        'App\Models\ticket_statuses' => 'App\Policies\TicketStatusPolicy',
+        ticket_statuses::class =>  TicketStatusPolicy::class,
         Users::class => UsersPolicy::class,
     
     ];

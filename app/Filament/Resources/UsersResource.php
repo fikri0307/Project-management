@@ -53,7 +53,7 @@ class UsersResource extends Resource
 
                         TextInput::make('password')
                         ->label('Password')
-                        // ->required()
+                        ->required()
 
                         ,
 
@@ -78,7 +78,7 @@ class UsersResource extends Resource
 
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('Full name'))
+                    ->label(__('Name'))
                     ->sortable()
                     ->searchable(),
 
@@ -91,11 +91,6 @@ class UsersResource extends Resource
                     ->label(__('Roles'))
                     ->limit(2),
 
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->label(__('Email verified at'))
-                    ->dateTime()
-                    ->sortable()
-                    ->searchable(),
             ])
             ->filters([
                 //

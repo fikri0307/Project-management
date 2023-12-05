@@ -51,7 +51,6 @@ class TicketsResource extends Resource
                                 ->pluck('projects.name', 'projects.id'))
                             ->default(fn() => projects_user::where('users_id', Auth::id())->with('projects')->get()
                                 ->pluck('projects.name', 'projects.id'))
-                            // ->disablePlaceholderSelection()
                             ->required()
                         ,
                         Select::make('owner_id')
@@ -62,8 +61,6 @@ class TicketsResource extends Resource
                                 }))
                             ->default(fn() => project::whereNotNull('owner_id')->first()
                                 ? project::whereNotNull('owner_id')->first()->owner->id : null)
-                            // ->default(fn() => project::whereNotNull('owner_id')->with('owner')->get()
-                            //     ->pluck('owner.name', 'owner.id'))
                             ->disablePlaceholderSelection()
                             ->required()
                         ,

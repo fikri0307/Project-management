@@ -13,7 +13,7 @@ class TicketStatusPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('List Todo Status') || $user->hasRole('admin');
+        return $user->can('List Todo Status');
     }
 
     /**
@@ -21,7 +21,7 @@ class TicketStatusPolicy
      */
     public function view(User $user, ticket_statuses $ticketStatuses): bool
     {
-        return $user->can('View Todo Status') || $user->hasRole('admin');
+        return $user->can('View Todo Status');
     }
 
     /**
@@ -29,7 +29,7 @@ class TicketStatusPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('Create Todo Status') || $user->hasRole('admin');
+        return $user->can('Create Todo Status');
     }
 
     /**
@@ -37,7 +37,7 @@ class TicketStatusPolicy
      */
     public function update(User $user, ticket_statuses $ticketStatuses): bool
     {
-        return $user->can('Update Todo Status') || $user->hasRole('admin');
+        return $user->can('Update Todo Status');
     }
 
     /**
@@ -45,22 +45,22 @@ class TicketStatusPolicy
      */
     public function delete(User $user, ticket_statuses $ticketStatuses): bool
     {
-        return $user->can('Delete Todo Status') || $user->hasRole('admin');
+        return $user->can('Delete Todo Status');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    // public function restore(User $user, ticket_statuses $ticketStatuses): bool
-    // {
-    //     //
-    // }
+    public function restore(User $user, ticket_statuses $ticketStatuses): bool
+    {
+        return $user->can('Restore Todo Status');
+    }
 
-    // /**
-    //  * Determine whether the user can permanently delete the model.
-    //  */
-    // public function forceDelete(User $user, ticket_statuses $ticketStatuses): bool
-    // {
-    //     //
-    // }
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function forceDelete(User $user, ticket_statuses $ticketStatuses): bool
+    {
+        return $user->can('forceDelete Todo Status');
+    }
 }

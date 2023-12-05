@@ -2,7 +2,6 @@
 
 return [
     'includes' => [
-        // App\Filament\Resources\Blog\AuthorResource::class,
         App\Filament\Resources\ProjectResource::class,
         App\Filament\Resources\TicketsResource::class,
         App\Filament\Resources\usersResource::class,
@@ -22,5 +21,5 @@ return [
         '2xl' => null,
     ],
     'disable_css' => false,
-    'disable_sorting' => false,
+    'disable_sorting' => true,
 ];

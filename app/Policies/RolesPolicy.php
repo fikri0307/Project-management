@@ -15,7 +15,7 @@ class RolesPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('List Roles') || $user->hasRole(['project-management', 'admin']) ;
+        return $user->can('List Roles');
     }
 
     /**
@@ -23,7 +23,7 @@ class RolesPolicy
      */
     public function view(User $user, roles $roles): bool
     {
-        return $user->can('View Roles') || $user->hasRole(['project-management', 'admin']) ;
+        return $user->can('View Roles');
     }
 
     /**
@@ -31,7 +31,7 @@ class RolesPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('Create Roles') || $user->hasRole(['project-management', 'admin']) ;
+        return $user->can('Create Roles');
     }
 
     /**
@@ -39,7 +39,7 @@ class RolesPolicy
      */
     public function update(User $user, roles $roles): bool
     {
-        return $user->can('Update Roles') || $user->hasRole(['project-management', 'admin']) ;
+        return $user->can('Update Roles');
     }
 
     /**
@@ -47,22 +47,22 @@ class RolesPolicy
      */
     public function delete(User $user, roles $roles): bool
     {
-        return $user->can('Delete Roles') || $user->hasRole(['project-management', 'admin']) ;
+        return $user->can('Delete Roles');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    // public function restore(User $user, roles $roles): bool
-    // {
-    //     //
-    // }
+    public function restore(User $user, roles $roles): bool
+    {
+        return $user->can('Restore Roles');
+    }
 
-    // /**
-    //  * Determine whether the user can permanently delete the model.
-    //  */
-    // public function forceDelete(User $user, roles $roles): bool
-    // {
-    //     //
-    // }
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function forceDelete(User $user, roles $roles): bool
+    {
+        return $user->can('forceDelete Roles');
+    }
 }

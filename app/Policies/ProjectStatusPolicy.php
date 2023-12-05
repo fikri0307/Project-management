@@ -61,7 +61,7 @@ class ProjectStatusPolicy
      */
     public function restore(User $user, Project_statuses $projectStatuses)
     {
-        //
+        return $user->can('Restore Project Status');
     }
 
     /**
@@ -70,6 +70,6 @@ class ProjectStatusPolicy
      */
     public function forceDelete(User $user, Project_statuses $projectStatuses)
     {
-        //
+        return $user->can('forceDelete Project Status');
     }
 }

@@ -15,7 +15,7 @@ class TicketsPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('List Tickets')|| $user->hasRole(['project-management', 'admin']);
+        return $user->can('List Tickets');
     }
 
     /**
@@ -23,7 +23,7 @@ class TicketsPolicy
      */
     public function view(User $user, tickets $tickets): bool
     {
-        return $user->can('View Tickets')|| $user->hasRole(['project-management', 'admin']);
+        return $user->can('View Tickets');
     }
 
     /**
@@ -31,7 +31,7 @@ class TicketsPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('Create Tickets')|| $user->hasRole(['project-management', 'admin']);
+        return $user->can('Create Tickets');
     }
 
     /**
@@ -39,7 +39,7 @@ class TicketsPolicy
      */
     public function update(User $user, tickets $tickets): bool
     {
-        return $user->can('Update Tickets')|| $user->hasRole(['project-management', 'admin']);
+        return $user->can('Update Tickets');
     }
 
     /**
@@ -47,22 +47,22 @@ class TicketsPolicy
      */
     public function delete(User $user, tickets $tickets): bool
     {
-        return $user->can('Delete Tickets')|| $user->hasRole(['project-management', 'admin']);
+        return $user->can('Delete Tickets');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    // public function restore(User $user, tickets $tickets): bool
-    // {
-    //     //
-    // }
+    public function restore(User $user, tickets $tickets): bool
+    {
+        return $user->can('Restore Tickets');
+    }
 
-    // /**
-    //  * Determine whether the user can permanently delete the model.
-    //  */
-    // public function forceDelete(User $user, tickets $tickets): bool
-    // {
-    //     //
-    // }
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function forceDelete(User $user, tickets $tickets): bool
+    {
+        return $user->can('forceDelete Tickets');
+    }
 }

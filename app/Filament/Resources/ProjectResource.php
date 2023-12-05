@@ -25,8 +25,6 @@ use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\IconColumn;
 use Illuminate\Support\HtmlString;
-use Filament\Support\Colors\Color; //c
-use Filament\Support\Facades\FilamentColor;
 
 class ProjectResource extends Resource
 {
@@ -46,7 +44,7 @@ class ProjectResource extends Resource
                         ,
                         Select::make('owner_id')
                             ->label('Project Manager')
-                            ->options( fn() => User::role(['project-management', 'admin'])->get()->pluck('name', 'id')->toArray())
+                            ->options( fn() => User::all()->pluck('name', 'id')->toArray())
                             ->required()
                             ->disablePlaceholderSelection()
                         ,
@@ -71,14 +69,14 @@ class ProjectResource extends Resource
                     Stack::make([
                 TextColumn::make('name')->sortable()->searchable()->label('Name')->size('lg')->weight('bold')
                 ,
-                TextColumn::make('description')->sortable()->searchable()->label('')->size('sm')->weight('bold')->color('secondary')
+                TextColumn::make('description')->label('')->size('sm')->weight('bold')->color('secondary')
                 ,
-                TextColumn::make('')->sortable()
+                TextColumn::make('')
                 ,
                 Stack::make([
                     Split::make([
 
-                BadgeColumn::make('projectStatus.name')->sortable()->label('Status')
+                BadgeColumn::make('projectStatus.name')->sortable()->label('Status')->searchable()
                 ->colors([
                     'success' => 'Done',
                     'secondary' => 'In Progress',
@@ -95,23 +93,23 @@ class ProjectResource extends Resource
                 ])
                 ]),
                 Stack::make([
-                TextColumn::make('')->sortable()->placeholder('Project Manager')->size('lg')->weight('bold')
+                TextColumn::make('')->placeholder('Project Manager')->size('lg')->weight('bold')
                 ,
-                TextColumn::make('owner.name')->sortable()->label('PM')->weight('bold')->color('success')
+                TextColumn::make('owner.name')->sortable()->searchable()->label('PM')->weight('bold')->color('success')
                 ,
-                TextColumn::make('')->sortable()
+                TextColumn::make('')
                 ,
-                TextColumn::make('')->sortable()
+                TextColumn::make('')
                 ,
                 ]),
                 Stack::make([
-                TextColumn::make('')->sortable()->placeholder('Assign')->size('lg')->weight('bold')
+                TextColumn::make('')->placeholder('Assign')->size('lg')->weight('bold')
                 ,
                 TagsColumn::make('users.name')->label('Assign')->limit(3)
                 ,
-                TextColumn::make('')->sortable()
+                TextColumn::make('')
                 ,
-                TextColumn::make('')->sortable()
+                TextColumn::make('')
                 ,
                 ]),
                         

@@ -15,7 +15,7 @@ class PermissionsPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('List Permissions') || $user->hasRole(['project-management', 'admin']) ;
+        return $user->can('List Permissions');
     }
 
     /**
@@ -23,7 +23,7 @@ class PermissionsPolicy
      */
     public function view(User $user, permissions $permissions): bool
     {
-        return $user->can('View Permissions') || $user->hasRole(['project-management', 'admin']) ;
+        return $user->can('View Permissions');
     }
 
     /**
@@ -31,7 +31,7 @@ class PermissionsPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('Create Permissions') || $user->hasRole(['project-management', 'admin']) ;
+        return $user->can('Create Permissions');
     }
 
     /**
@@ -39,7 +39,7 @@ class PermissionsPolicy
      */
     public function update(User $user, permissions $permissions): bool
     {
-        return $user->can('Update Permissions') || $user->hasRole(['project-management', 'admin']) ;
+        return $user->can('Update Permissions');
     }
 
     /**
@@ -47,24 +47,22 @@ class PermissionsPolicy
      */
     public function delete(User $user, permissions $permissions): bool
     {
-        return $user->can('Delete Permissions') || $user->hasRole(['project-management', 'admin']) ;
+        return $user->can('Delete Permissions');
     }
 
+    /**
+     * Determine whether the user can restore the model.
+     */
+    public function restore(User $user, permissions $permissions): bool
+    {
+        return $user->can('Restore Permissions');
+    }
 
-
-    // /**
-    //  * Determine whether the user can restore the model.
-    //  */
-    // public function restore(User $user, permissions $permissions): bool
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Determine whether the user can permanently delete the model.
-    //  */
-    // public function forceDelete(User $user, permissions $permissions): bool
-    // {
-    //     //
-    // }
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function forceDelete(User $user, permissions $permissions): bool
+    {
+        return $user->can('forceDelete Permissions');
+    }
 }
