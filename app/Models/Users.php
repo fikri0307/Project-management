@@ -73,10 +73,10 @@ class Users extends Model
         return $this->belongsToMany(\App\Models\project::class, 'users_id', 'projects_id');
     }
 
-    public function roles() 
-    {
-        return $this->belongsTo(roles::class);
-    }
+    // public function roles() 
+    // {
+    //     return $this->belongsTo(roles::class);
+    // }
 
 
 }

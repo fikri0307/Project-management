@@ -14,7 +14,7 @@ use App\Policies\ProjectPolicy;
 use App\Policies\ProjectStatusPolicy;
 use App\Policies\RolesPolicy;
 use App\Policies\TicketsPolicy;
-use App\Policies\TicketStatusesPolicy;
+use App\Policies\TicketStatusPolicy;
 use App\Policies\UsersPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -33,7 +33,8 @@ class AuthServiceProvider extends ServiceProvider
         Project_statuses::class => ProjectStatusPolicy::class,
         roles::class => RolesPolicy::class,
         tickets::class => TicketsPolicy::class,
-        ticket_statuses::class => TicketStatusesPolicy::class,
+        'App\Models\Ticket_statuses' => 'App\Policies\TicketStatusPolicy',
+        ticket_statuses::class => TicketStatusPolicy::class,
         Users::class => UsersPolicy::class,
     
     ];
@@ -48,16 +49,16 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
 
-    // Mendefinisikan Gates berdasarkan permissions dari database
-    foreach ($this->getPermissions() as $permission) {
-        Gate::define($permission->name, function ($user) use ($permission) {
-            return $user->hasPermissionTo($permission);
-        });
-    }
+    // // Mendefinisikan Gates berdasarkan permissions dari database
+    // foreach ($this->getPermissions() as $permission) {
+    //     Gate::define($permission->name, function ($user) use ($permission) {
+    //         return $user->hasPermissionTo($permission);
+    //     });
+    // }
 }
 
-protected function getPermissions()
-    {
-        return permissions::all();
-    }
+// protected function getPermissions()
+//     {
+//         return permissions::all();
+//     }
 }

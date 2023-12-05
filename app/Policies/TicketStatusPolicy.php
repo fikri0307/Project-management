@@ -7,7 +7,7 @@ use App\Models\ticket_statuses;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class TicketStatusesPolicy
+class TicketStatusPolicy
 {
     use HandlesAuthorization;
     /**
@@ -23,7 +23,7 @@ class TicketStatusesPolicy
      */
     public function view(User $user, ticket_statuses $ticketStatuses): bool
     {
-        return $user->can('View Ticket Statuses');  
+        return $user->can('View Ticket Statuses');
     }
 
     /**
