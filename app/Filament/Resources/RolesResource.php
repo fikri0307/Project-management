@@ -4,33 +4,42 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
-use App\Models\Roles;
+use App\Models\roles;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\RolesResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\RolesResource\RelationManagers;
+use App\Models\permissions;
 
 class RolesResource extends Resource
 {
     protected static ?string $model = roles::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-badge-check';
 
-    protected static ?string $navigationGroup = 'ACCOUNT';
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationGroup = 'SETTINGS';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')->required(),
-                TextInput::make('owner')->required(),
-                TextInput::make('description'),
-                TextInput::make('project_statuses_id'), 
+                Forms\Components\Grid::make()
+                    ->columns(1)
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label(__('Role name'))
+                            ->unique(table: permissions::class, column: 'name')
+                            ->maxLength(255)
+                            ->required(),
+
+                        Forms\Components\CheckboxList::make('permissions')
+                            ->label(__('Permissions'))
+                            ->required()
+                            ->columns(4)
+                            ->relationship('permissions', 'name'),
+                    ]),
             ]);
     }
 
@@ -38,34 +47,40 @@ class RolesResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()->searchable()->label('nama'),
-                TextColumn::make('guard_name')->sortable()->searchable(),
-                TextColumn::make('created_at')->sortable()->searchable()->label('Status'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label(__('Permission name'))
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TagsColumn::make('permissions.name')
+                    ->label(__('Permissions'))
+                    ->limit(1),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListRoles::route('/create'),
             //  'create' => Pages\CreateRoles::route('/create'),
-            'edit' => Pages\EditRoles::route('/{record}/edit'),
+            // 'edit' => Pages\EditRoles::route('/{record}/edit'),
         ];
-    }    
+    }
 }

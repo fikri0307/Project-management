@@ -12,7 +12,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Grid;
+
 use App\Filament\Resources\TicketsResource\Pages;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\BadgeColumn;
@@ -20,10 +20,13 @@ use App\Models\project;
 use App\Models\projects_user;
 use App\Models\ticket_statuses;
 use App\Models\User;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Auth;
-
+use Filament\Forms\Components\Grid;
+use Filament\Tables\Columns\IconColumn;
 class TicketsResource extends Resource
 {
     protected static ?string $model = tickets::class;
@@ -48,7 +51,6 @@ class TicketsResource extends Resource
                                 ->pluck('projects.name', 'projects.id'))
                             ->default(fn() => projects_user::where('users_id', Auth::id())->with('projects')->get()
                                 ->pluck('projects.name', 'projects.id'))
-                            // ->disablePlaceholderSelection()
                             ->required()
                         ,
                         Select::make('owner_id')
@@ -57,10 +59,10 @@ class TicketsResource extends Resource
                                 ->flatMap(function ($project) {
                                     return [$project->owner->id => $project->owner->name];
                                 }))
-                            ->default(fn() => project::whereNotNull('owner_id')->first()
-                                ? project::whereNotNull('owner_id')->first()->owner->id : null)
-                            // ->default(fn() => project::whereNotNull('owner_id')->with('owner')->get()
-                            //     ->pluck('owner.name', 'owner.id'))
+                            // ->default(fn() => project::whereNotNull('owner_id')->first()
+                            //     ? project::whereNotNull('owner_id')->first()->owner->id : null)
+                            ->default(fn() => project::whereNotNull('owner_id')
+                            ? project::whereNotNull('owner_id')->first()->owner->id : null)
                             ->disablePlaceholderSelection()
                             ->required()
                         ,
@@ -89,7 +91,7 @@ class TicketsResource extends Resource
                 ])->columns(1),
                 Grid::make()
                 ->schema([
-                        DatePicker::make('created_at')->label('Due At')
+                        DatePicker::make('due_at')->label('Due At')
                         ,
                         DatePicker::make('complete_at')->label('Done At')
 
@@ -101,31 +103,92 @@ class TicketsResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('projects.name')->sortable()->searchable()->label('Project')
+                
+            Split::make ([
+                Stack::make([
+                TextColumn::make('')->placeholder('Project')->size('sm')->color('secondary')
+                ,  
+                TextColumn::make('projects.name')->sortable()->searchable()->label('Project')->weight('bold')
                 ,
-                TextColumn::make('name')->sortable()->searchable()->label('Todo')
+                Split::make([
+                TextColumn::make('')->placeholder('Manager:')->size('sm')->color('secondary')
+                        ,
+                        TextColumn::make('owner.name')->sortable()->searchable()->label('Project Manager')->color('success')
+                        ,  
+                        TextColumn::make('')
                 ,
-                BadgeColumn::make('team.name')->sortable()->searchable()->label('Team')->colors(['primary'])
+                TextColumn::make('')
                 ,
-                TextColumn::make('owner.name')->sortable()->searchable()->label('PM')
+                TextColumn::make('')
                 ,
-                TextColumn::make('status.name')
+                TextColumn::make('')
+                
+                ]),
+
+                TextColumn::make('')
+                ,
+                
+               
+
+            Split::make([
+                BadgeColumn::make('status.name')->sortable()
                 ->label(__('Status'))
-                ->formatStateUsing(fn($record) => new HtmlString('
+                ->colors([ 
+                    'success' => 'Done',
+                    'secondary' => 'In Progress',
+                        ])
+                ->formatStateUsing(fn($record) => new HtmlString
+                ('
                     <div class="flex items-center gap-1">
-                        <span>' . $record->status->name . '</span>
-                        <span class="filament-tables-color-column relative flex h-6 w-6 rounded-md"
-                            style="background-color: ' . $record->status->color . '">
-                        </span>
+                        <span color: green;>' . $record->status->name . '</span>             
                     </div>
-                '))
-                ->sortable()
-                ->searchable()
+                ')),
+                
+                ])
+                ]),
+                
+               
+                Stack::make ([
+                    
+                    Split::make([
+                        TextColumn::make('')->placeholder('Assignee:')->size('sm')->color('secondary')
+                        ,                 
+                        TextColumn::make('team.name')->searchable()->label('Team')->color('primary')
+                        , 
+                        TextColumn::make('')
+                        ,
+                        TextColumn::make('')
+                        ,                 
+                        TextColumn::make('')
+                        ,
+                        
+                        ]),
+                    TextColumn::make('name')->searchable()->label('Todo')->weight('bold')
+                    ,
+                    TextColumn::make('')
+                    ,
+                    TextColumn::make('')
+                    ,
+                    TextColumn::make('')
+            
+                ]),
+              
+                Split::make([TextColumn::make('')
                 ,
-                TextColumn::make('created_at')->date()
+                Stack::make ([
+                TextColumn::make('')->placeholder('Due At')->size('sm')->color('')
+                ,    
+                TextColumn::make('due_at')->date()->size('sm')->Icon('heroicon-o-clock')->color('primary')->weight('bold')
                 ,
-                TextColumn::make('complete_at')->date()
-        
+                TextColumn::make('')->placeholder('Done At')->size('sm')->color('')
+                ,
+                TextColumn::make('complete_at')->date()->size('sm')->Icon('heroicon-o-clock')->color('success')->weight('bold')
+                ,
+                TextColumn::make('')
+                ,
+                ])
+                ])
+                ])
 
             ])
             ->filters([
@@ -154,5 +217,12 @@ class TicketsResource extends Resource
             // 'create' => Pages\CreateTickets::route('/create'),
             // 'edit' => Pages\EditTickets::route('/{record}/edit'),
         ];
-    }    
+    }  
+    public static function getWidgets(): array
+    {
+        return [
+            TicketsResource\Widgets\StatsOverview::class,
+            TicketsResource\Widgets\BlogPostsChart::class,
+        ];
+    }  
 }

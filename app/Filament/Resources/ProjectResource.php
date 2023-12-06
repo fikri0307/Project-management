@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Project;
@@ -18,6 +19,8 @@ use App\Models\Project_statuses;
 use App\Models\projects_user;
 use App\Models\User;
 use App\Models\Users;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Illuminate\Support\HtmlString;
@@ -27,7 +30,7 @@ class ProjectResource extends Resource
     protected static ?string $model = project::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
-
+    
     protected static ?int $navigationSort = 2;
 
     protected static ?string $modelLabel = 'Project';
@@ -40,7 +43,7 @@ class ProjectResource extends Resource
                         ,
                         Select::make('owner_id')
                             ->label('Project Manager')
-                            ->options( fn() => User::role(['project-management', 'admin'])->get()->pluck('name', 'id')->toArray())
+                            ->options( fn() => User::all()->pluck('name', 'id')->toArray())
                             ->required()
                             ->disablePlaceholderSelection()
                         ,
@@ -60,21 +63,56 @@ class ProjectResource extends Resource
     {
         return $table 
             ->columns([
-                TextColumn::make('name')->sortable()->searchable()->label('Name')
+                Stack::make([
+                    Split::make([
+                    Stack::make([
+                TextColumn::make('name')->sortable()->searchable()->label('Name')->size('lg')->weight('bold')
                 ,
-                TextColumn::make('owner.name')->sortable()->label('PM')
+                TextColumn::make('description')->label('')->size('sm')->weight('bold')->color('secondary')
+                ,
+                TextColumn::make('')
+                ,
+                Stack::make([
+                    Split::make([
+
+                BadgeColumn::make('projectStatus.name')->sortable()->label('Status')->searchable()
+                ->colors([
+                    'success' => 'Done',
+                    'secondary' => 'In Progress',
+                        ])
+                ->formatStateUsing(fn($record) => new HtmlString
+                ('
+                    <div class="flex items-center gap-2">
+                        <span>' . $record->projectStatus->name . '</span>    
+                    </div>
+                ')),
+                
+                        
+                ])
+                ])
+                ]),
+                Stack::make([
+                TextColumn::make('')->placeholder('Project Manager')->size('lg')->weight('bold')
+                ,
+                TextColumn::make('owner.name')->sortable()->searchable()->label('Project Manager')->weight('bold')->color('success')
+                ,
+                TextColumn::make('')
+                ,
+                TextColumn::make('')
+                ,
+                ]),
+                Stack::make([
+                TextColumn::make('')->placeholder('Assign')->size('lg')->weight('bold')
                 ,
                 TagsColumn::make('users.name')->label('Assign')->limit(3)
                 ,
-                TextColumn::make('projectStatus.name')->sortable()->label('Status')
-                    ->formatStateUsing(fn($record) => new HtmlString('
-                    <div class="flex items-center gap-2">
-                        <span>' . $record->projectStatus->name . '</span>
-                        <span class="filament-tables-color-column relative flex h-6 w-6 rounded-md"
-                            style="background-color: ' . $record->projectStatus->color . '">
-                        </span>
-                    </div>
-                '))
+                TextColumn::make('')
+                ,
+                TextColumn::make('')
+                ,
+                ]),            
+                ])
+            ]),
             ])
             ->filters([
 

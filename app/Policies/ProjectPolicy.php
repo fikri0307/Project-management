@@ -5,18 +5,20 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\project;
 use App\Models\Project_statuses;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 
 class ProjectPolicy
 {
+    use HandlesAuthorization;
     /**
      * Determine whether the user can view any models.
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole(['project-management', 'admin']);
+        return $user->can('List Project');
     }
 
     /**
@@ -25,7 +27,7 @@ class ProjectPolicy
      */
     public function view(User $user, project $project)
     {
-        return $user->hasRole(['project-management', 'admin']);
+        return $user->can('View Project');
     }
 
     /**
@@ -35,7 +37,7 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole(['project-management', 'admin']);
+        return $user->can('Create Project');
     }
 
     /**
@@ -44,7 +46,7 @@ class ProjectPolicy
      */
     public function update(User $user, project $project)
     {
-        return $user->hasRole(['project-management', 'admin']);
+        return $user->can('Update Project');
     }
 
     /**
@@ -53,7 +55,7 @@ class ProjectPolicy
      */
     public function delete(User $user, project $project)
     {
-        return $user->hasRole(['project-management', 'admin']);
+        return $user->can('Delete Project');
     }
 
     /**
@@ -62,7 +64,7 @@ class ProjectPolicy
      */
     public function restore(User $user, project $project)
     {
-        //
+        return $user->can('Restore Project');
     }
 
     /**
@@ -71,6 +73,6 @@ class ProjectPolicy
      */
     public function forceDelete(User $user, project $project)
     {
-        //
+        return $user->can('forceDelete Project');
     }
 }

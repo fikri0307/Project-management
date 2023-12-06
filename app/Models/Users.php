@@ -17,7 +17,7 @@ class Users extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name','email','updated_at','password'];
+    protected $fillable = ['name','email','updated_at','password', 'email_verified_at',];
 
  /**
      * The attributes that should be hidden for serialization.
@@ -50,7 +50,7 @@ class Users extends Model
 
     public function projectsUsers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(\App\Models\project::class, 'projects_user', 'users_id', 'projects_id' );
+        return $this->belongsToMany(\App\Models\project::class, 'projects_user', 'users_id', 'projects_id' )->withPivot(['roles']);
     }
 
     public function ticketsOwned(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -72,6 +72,11 @@ class Users extends Model
     {
         return $this->belongsToMany(\App\Models\project::class, 'users_id', 'projects_id');
     }
+
+    // public function roles() 
+    // {
+    //     return $this->belongsTo(roles::class);
+    // }
 
 
 }

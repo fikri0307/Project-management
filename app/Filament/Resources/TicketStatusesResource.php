@@ -21,7 +21,7 @@ class TicketStatusesResource extends Resource
 
     protected static ?string $modelLabel = 'Todo Status';
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-pie';
 
     protected static ?string $navigationLabel = 'Todo Status';
 
@@ -44,8 +44,8 @@ class TicketStatusesResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()->searchable()->label('user'),
-                ColorColumn::make('color')->sortable()->searchable(),
+                TextColumn::make('name')->searchable()->label('Status'),
+                ColorColumn::make('color')->searchable(),
                 IconColumn::make('is_default')->sortable()->boolean()->searchable()->label('Is Default'),     
             ])
             ->filters([

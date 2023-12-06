@@ -21,6 +21,7 @@ class tickets extends Model
         'projects_id',
         'team_id',
         'created_at',
+        'due_at',
         'complete_at'
         // 'code',
     ];
@@ -45,6 +46,18 @@ class tickets extends Model
         'projects_id' => 'required'
     ];
 
+    public static function boot() {
+        
+        parent::boot();
+
+        static::saved(function (tickets $item) {
+            if ($item->ticket_statuses_id) {
+                $query = tickets::where('id', '<>', $item->id)
+                    ->where('Done', true);
+            }
+        });
+
+    }
 
     public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
