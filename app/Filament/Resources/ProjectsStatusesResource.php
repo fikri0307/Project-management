@@ -7,10 +7,12 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Models\Project_statuses;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Checkbox;
 use Filament\Tables\Columns\ColorColumn;
+use Filament\Forms\Components\ColorPicker;
+use Filament\Tables\Columns\IconColumn;
 use App\Filament\Resources\ProjectsStatusesResource\Pages;
 
 
@@ -31,14 +33,11 @@ class ProjectsStatusesResource extends Resource
         return $form
             ->schema([
                
-                TextInput::make('name')->required()->autofocus(),
-                TextInput::make('owner_id'),
-                TextInput::make('description'),
-                Select::make('project_statuses_id')
-                    ->options([
-                        '1' => 'in progress',
-                        '2' => 'done'
-                    ])->required(),
+                TextInput::make('name')->label('Name Status')
+                ,
+                ColorPicker::make('color')->label('Color')
+                ,
+                Checkbox::make('is_default')->label('Is Default')
 
             ]);
     }
@@ -47,9 +46,9 @@ class ProjectsStatusesResource extends Resource
     {
         return $table
             ->columns([
-                    TextColumn::make('name')->sortable()->searchable()->label('nama'),
+                    TextColumn::make('name')->searchable()->label('Status'),
                     ColorColumn::make('color')->sortable()->searchable(),
-                   
+                    IconColumn::make('is_default')->sortable()->boolean()->searchable()->label('Is Default'),                   
             
             ])
             ->filters([
@@ -75,8 +74,8 @@ class ProjectsStatusesResource extends Resource
     {
         return [
             'index' => Pages\ListProjectsStatuses::route('/'),
-            'create' => Pages\CreateProjectsStatuses::route('/create'),
-            'edit' => Pages\EditProjectsStatuses::route('/{record}/edit'),
+            // 'create' => Pages\CreateProjectsStatuses::route('/create'),
+            // 'edit' => Pages\EditProjectsStatuses::route('/{record}/edit'),
         ];
     }    
 }

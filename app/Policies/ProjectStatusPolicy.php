@@ -34,7 +34,7 @@ class ProjectStatusPolicy
      */
     public function create(User $user)
     {
-        return $user->can('Create Project Status');
+        return $user->can('Create Project Status') || $user->hasRole('admin');
     }
 
     /**

@@ -59,8 +59,10 @@ class TicketsResource extends Resource
                                 ->flatMap(function ($project) {
                                     return [$project->owner->id => $project->owner->name];
                                 }))
-                            ->default(fn() => project::whereNotNull('owner_id')->first()
-                                ? project::whereNotNull('owner_id')->first()->owner->id : null)
+                            // ->default(fn() => project::whereNotNull('owner_id')->first()
+                            //     ? project::whereNotNull('owner_id')->first()->owner->id : null)
+                            ->default(fn() => project::whereNotNull('owner_id')
+                            ? project::whereNotNull('owner_id')->first()->owner->id : null)
                             ->disablePlaceholderSelection()
                             ->required()
                         ,
@@ -89,7 +91,7 @@ class TicketsResource extends Resource
                 ])->columns(1),
                 Grid::make()
                 ->schema([
-                        DatePicker::make('created_at')->label('Due At')
+                        DatePicker::make('due_at')->label('Due At')
                         ,
                         DatePicker::make('complete_at')->label('Done At')
 
@@ -103,37 +105,33 @@ class TicketsResource extends Resource
             ->columns([
                 
             Split::make ([
-                //Grid::make()
-               // ->schema([
                 Stack::make([
-                TextColumn::make('')->sortable()->placeholder('Project')->size('sm')->color('secondary')
+                TextColumn::make('')->placeholder('Project')->size('sm')->color('secondary')
                 ,  
-                TextColumn::make('projects.name')->sortable()->searchable()->label('Project')
+                TextColumn::make('projects.name')->sortable()->searchable()->label('Project')->weight('bold')
                 ,
                 Split::make([
-                TextColumn::make('')->sortable()->placeholder('Manager:')->size('sm')->color('secondary')
+                TextColumn::make('')->placeholder('Manager:')->size('sm')->color('secondary')
                         ,
-                        TextColumn::make('owner.name')->sortable()->searchable()->label('PM')->color('success')
+                        TextColumn::make('owner.name')->sortable()->searchable()->label('Project Manager')->color('success')
                         ,  
-                        TextColumn::make('')->sortable()
+                        TextColumn::make('')
                 ,
-                TextColumn::make('')->sortable()
+                TextColumn::make('')
                 ,
-                TextColumn::make('')->sortable()
+                TextColumn::make('')
                 ,
-                TextColumn::make('')->sortable()
+                TextColumn::make('')
                 
                 ]),
 
-                TextColumn::make('')->sortable()
+                TextColumn::make('')
                 ,
                 
                
 
             Split::make([
-                //Grid::make()
-                //->schema([
-                BadgeColumn::make('status.name')
+                BadgeColumn::make('status.name')->sortable()
                 ->label(__('Status'))
                 ->colors([ 
                     'success' => 'Done',
@@ -146,7 +144,6 @@ class TicketsResource extends Resource
                     </div>
                 ')),
                 
-               // ])->columns(1) //schema
                 ])
                 ]),
                 
@@ -154,56 +151,43 @@ class TicketsResource extends Resource
                 Stack::make ([
                     
                     Split::make([
-                        TextColumn::make('')->sortable()->placeholder('Assignee:')->size('sm')->color('secondary')
+                        TextColumn::make('')->placeholder('Assignee:')->size('sm')->color('secondary')
                         ,                 
-                        TextColumn::make('team.name')->sortable()->searchable()->label('Team')->color('primary')
+                        TextColumn::make('team.name')->searchable()->label('Team')->color('primary')
                         , 
-                        TextColumn::make('')->sortable()
+                        TextColumn::make('')
                         ,
-                        TextColumn::make('')->sortable()
+                        TextColumn::make('')
                         ,                 
-                        TextColumn::make('')->sortable()
+                        TextColumn::make('')
                         ,
                         
                         ]),
-                    TextColumn::make('name')->sortable()->searchable()->label('Todo')
+                    TextColumn::make('name')->searchable()->label('Todo')->weight('bold')
                     ,
-                    TextColumn::make('')->sortable()
+                    TextColumn::make('')
                     ,
-                    TextColumn::make('')->sortable()
+                    TextColumn::make('')
                     ,
-                    TextColumn::make('')->sortable()
-                    ,
-                    
-                    
-                    
-                    
-                    
-                    
+                    TextColumn::make('')
+            
                 ]),
               
-                Split::make([TextColumn::make('')->sortable()
+                Split::make([TextColumn::make('')
                 ,
                 Stack::make ([
-                TextColumn::make('')->sortable()->placeholder('Due At')->size('sm')->color('')
+                TextColumn::make('')->placeholder('Due At')->size('sm')->color('')
                 ,    
-                TextColumn::make('created_at')->date()->size('sm')->Icon('heroicon-o-clock')->color('primary')
+                TextColumn::make('due_at')->date()->size('sm')->Icon('heroicon-o-clock')->color('primary')->weight('bold')
                 ,
-                TextColumn::make('')->sortable()->placeholder('Done At')->size('sm')->color('')
+                TextColumn::make('')->placeholder('Done At')->size('sm')->color('')
                 ,
-                TextColumn::make('complete_at')->date()->size('sm')->Icon('heroicon-o-clock')->color('success')
+                TextColumn::make('complete_at')->date()->size('sm')->Icon('heroicon-o-clock')->color('success')->weight('bold')
                 ,
-                TextColumn::make('')->sortable()
+                TextColumn::make('')
                 ,
                 ])
                 ])
-               
-             
-          
-               // ->colors(['success']),
-           
-               
-               // ])->columns(1) //schema
                 ])
 
             ])

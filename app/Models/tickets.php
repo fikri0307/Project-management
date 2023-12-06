@@ -21,6 +21,7 @@ class tickets extends Model
         'projects_id',
         'team_id',
         'created_at',
+        'due_at',
         'complete_at'
         // 'code',
     ];

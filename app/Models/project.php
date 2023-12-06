@@ -57,10 +57,6 @@ class project extends Model
         return $this->belongsTo(\App\Models\Project_statuses::class, 'project_statuses_id');
     }
 
-    // public function projectsUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
-    // {
-    //     return $this->hasMany(\App\Models\projects_user::class, 'projects_id', 'users_id');
-    // }
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(\App\Models\Users::class, 'projects_user' ,'projects_id', 'users_id');

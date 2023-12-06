@@ -23,7 +23,6 @@ use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Columns\IconColumn;
 use Illuminate\Support\HtmlString;
 
 class ProjectResource extends Resource
@@ -95,7 +94,7 @@ class ProjectResource extends Resource
                 Stack::make([
                 TextColumn::make('')->placeholder('Project Manager')->size('lg')->weight('bold')
                 ,
-                TextColumn::make('owner.name')->sortable()->searchable()->label('PM')->weight('bold')->color('success')
+                TextColumn::make('owner.name')->sortable()->searchable()->label('Project Manager')->weight('bold')->color('success')
                 ,
                 TextColumn::make('')
                 ,
@@ -111,13 +110,7 @@ class ProjectResource extends Resource
                 ,
                 TextColumn::make('')
                 ,
-                ]),
-                        
-              //  <span class="filament-tables-color-column relative flex h-4 w-4 rounded-md"
-                ///            style="background-color: ' . $record->projectStatus->color . '">
-                   //     </span>
-            
-                
+                ]),            
                 ])
             ]),
             ])

@@ -16,11 +16,12 @@ use Filament\Tables\Actions\DeleteBulkAction;
 //class Profile extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $navigationGroup = 'ACCOUNT';
 
-    //   protected static string $view = 'filament.pages.profile';
-    protected static ?string $modelLabel = 'apalah';
-     protected static ?string $model = Profile::class;  
+    protected static ?string $navigationGroup = 'SETTINGS';
+
+    protected static ?string $modelLabel = 'Profile';
+
+    protected static ?string $model = Profile::class;  
 
     public static function table(Table $table): Table
     {
